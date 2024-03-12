@@ -1,5 +1,6 @@
 import os
 import sys
+from dataclasses import dataclass
 from typing import Generator, Self
 
 from tree_sitter import Language, Node, Parser, Tree
@@ -32,7 +33,7 @@ def delete_comments(python_program: str) -> str:
     parser = Parser()
     parser.set_language(PY_LANGUAGE)
     tree = parser.parse(bytes(python_program, "utf-8"))
-    # print(tree.root_node.sexp())
+    print(tree.root_node.sexp())
     prev = 0
     for node in traverse_tree(tree):
         if node.type == "comment":
@@ -65,7 +66,11 @@ def _delete_meaningless_spaces_one_line(line: str) -> str:
     words = [word for word in line.split() if word]
     for i in range(len(words)):
         res.append(words[i])
-        if i + 1 < len(words) and words[i][-1].isalnum() and words[i + 1][0].isalnum():
+        if (
+            i + 1 < len(words)
+            and (words[i][-1].isalnum() or words[i][-1] == "_")
+            and (words[i + 1][0].isalnum() or words[i + 1][0] == "_")
+        ):
             res.append(" ")
     return "".join(res)
 
@@ -113,7 +118,7 @@ def delete_meaningless_spaces(python_program: str) -> str:
     if visited_string:
         end_part = end_part.lstrip()
 
-    changed_program.append(_delete_meaningless_spaces(python_program[prev:]))
+    changed_program.append(_delete_meaningless_spaces(end_part))
     return "".join(changed_program)
 
 
@@ -130,12 +135,63 @@ class Scope:
             )
         self.names[old_name] = new_name
 
-    def get(self, old_name: str) -> str:
+    def get(self, old_name: str) -> str or None:
         if old_name in self.names:
             return self.names[old_name]
         if self.parent is None:
-            raise KeyError(f'Variable named "{old_name}" was not found')
+            return None
         return self.parent.get(old_name)
+
+
+@dataclass
+class Change:
+    start_byte: int
+    end_byte: int
+    replacement: str
+
+
+class NamesReplacer:
+    def __init__(self):
+        self.global_scope = Scope(None)
+        self.changes = []
+        self.last_id = 0
+
+    def make_changes(self, tree: Tree) -> list[Change]:
+        root = tree.root_node
+        # print(root.sexp())
+        self._visit(root, self.global_scope)
+        return self.changes
+
+    def _create_new_name(self) -> str:
+        name = f"name_{self.last_id}"
+        self.last_id += 1
+        return name
+
+    def _visit(self, node: Node or None, scope: Scope):
+        if node is None:
+            return
+        elif node.type == "class_definition":
+            self._visit_class_definition(node, scope)
+        elif node.type == "identifier":
+            self._visit_identifier(node, scope)
+        else:
+            for child in node.children:
+                self._visit(child, scope)
+
+    def _visit_class_definition(self, node: Node, scope: Scope):
+        name = node.child_by_field_name("name")
+        scope.insert(name.text, self._create_new_name())
+        self._visit(name, scope)
+
+        self._visit(node.child_by_field_name("superclasses"), scope)
+
+        inside_class_scope = Scope(scope)
+        self._visit(node.child_by_field_name("body"), inside_class_scope)
+
+    def _visit_identifier(self, node: Node, scope: Scope):
+        if new_name := scope.get(node.text):
+            self.changes.append(
+                Change(node.start_byte, node.end_byte, new_name))
 
 
 def replace_names(python_program: str) -> str:
@@ -143,11 +199,21 @@ def replace_names(python_program: str) -> str:
     parser = Parser()
     parser.set_language(PY_LANGUAGE)
     tree = parser.parse(bytes(python_program, "utf-8"))
+
+    changes = NamesReplacer().make_changes(tree)
+    prev = 0
+    for change in changes:
+        changed_program.append(python_program[prev:change.start_byte])
+        changed_program.append(change.replacement)
+        prev = change.end_byte
+    changed_program.append(python_program[prev:])
+
     return "".join(changed_program)
 
 
-python_program = sys.stdin.read()
-without_comments = delete_comments(python_program)
-replaced_tabs = replace_tabs_with_spaces(without_comments)
-without_meaningless_spaces = delete_meaningless_spaces(replaced_tabs)
-print(without_meaningless_spaces)
+program = sys.stdin.read()
+program = delete_comments(program)
+program = replace_tabs_with_spaces(program)
+program = delete_meaningless_spaces(program)
+program = replace_names(program)
+print(program)
