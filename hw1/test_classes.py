@@ -1,10 +1,12 @@
 class A:
-    def __init__(self):
-        pass
+    c: int
+    def __init__(self: Self):
+        self.a = A()
+        self.b = 4
 
 
 def __init__(self):
-    print('fuck')
+    print('a')
 
 
 __init__('aaaa')
@@ -18,5 +20,11 @@ class C(B, A):
     pass
 
 
-def f(a, b: B) -> int:
+def f(a, b: B or None, c=3) -> int:
     pass
+
+def f(a):
+    pass
+
+a: A = A()
+print(a.a.b)

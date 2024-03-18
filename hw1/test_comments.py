@@ -1,6 +1,8 @@
 # Importing the sys module to use sys.stdin for reading input
 import sys
 # Defining a function to calculate the factorial of a number
+# another comment line
+# Another one
 def factorial(n):
     """
     Calculate the factorial of a number.
