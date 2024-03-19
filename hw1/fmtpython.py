@@ -33,7 +33,6 @@ def delete_comments(program: bytes) -> bytes:
     parser = Parser()
     parser.set_language(PY_LANGUAGE)
     tree = parser.parse(program)
-    print(tree.root_node.sexp())
     prev = 0
     for node in traverse_tree(tree):
         if node.type == "comment":
@@ -118,21 +117,27 @@ def delete_meaningless_spaces(program: bytes) -> bytes:
     for node in traverse_tree(tree):
         if node.type == "string":
             visited_string = True
-            not_string_part = (
+            not_string_part = _delete_meaningless_spaces(
                 program[prev: node.start_byte].decode("utf-8").lstrip(" ")
             )
-            changed_program.append(
-                bytes(_delete_meaningless_spaces(not_string_part), "utf-8")
-            )
+            changed_program.append(bytes(not_string_part, "utf-8"))
 
             newline_index = program.rfind(b"\n", prev, node.start_byte)
             if newline_index == -1:
                 newline_index = prev
             before_string = program[newline_index + 1: node.start_byte]
-            if before_string.strip() == "":
+            if before_string.strip() == b"":
                 changed_program.append(before_string)
 
             string_part = program[node.start_byte: node.end_byte]
+
+            last_char = changed_program[-1].decode("utf-8")[-1]
+            new_char = string_part.decode("utf-8")[0]
+            if (last_char.isalnum() or last_char == "_") and (
+                new_char.isalnum() or new_char == "_"
+            ):
+                changed_program.append(b" ")
+
             changed_program.append(string_part)
 
             prev = node.end_byte
@@ -180,6 +185,10 @@ class Change:
     replacement: bytes
 
 
+def ignore(*args, **kwargs):
+    return
+
+
 class NamesReplacer:
     def __init__(self):
         self.global_scope = Scope(None)
@@ -203,70 +212,81 @@ class NamesReplacer:
         visit_identifier: Callable[[Node, Scope], None] = None,
         visit_function_definition: Callable[[Node, Scope], None] = None,
         visit_keyword_argument: Callable[[Node, Scope], None] = None,
-    ):
+        visit_assignment: Callable[[Node, Scope], None] = None,
+        visit_type: Callable[[Node, Scope], None] = None,
+    ) -> Callable[[], None] or None:
         if visit_identifier is None:
             visit_identifier = self._rename_identifier
         if visit_function_definition is None:
             visit_function_definition = self._visit_function_definition
+        if visit_assignment is None:
+            visit_assignment = self._visit_assignment
+        if visit_type is None:
+            visit_type = self._visit_type
 
         if node is None:
-            return
+            return None
         elif node.type == "class_definition":
-            self._visit_class_definition(node, scope)
+            return self._visit_class_definition(node, scope)
         elif node.type == "function_definition":
-            visit_function_definition(node, scope)
+            return visit_function_definition(node, scope)
         elif node.type == "for_statement":
             self._visit_for_statement(node, scope)
         elif node.type == "assignment":
-            self._visit_assignment(node, scope)
+            visit_assignment(node, scope)
         elif node.type == "attribute":
             self._visit_attribute(node, scope, visit_identifier)
         elif node.type == "call":
             self._visit_call(node, scope)
         elif node.type == "keyword_argument" and visit_keyword_argument:
             visit_keyword_argument(node, scope)
-        elif node.type == "typed_parameter":
-            self._visit_typed_parameter(node, scope, visit_identifier)
+        elif node.type == "named_expression":
+            self._visit_named_expression(node, scope)
         elif node.type == "type":
-            for child in node.children:
-                self._visit(child, scope)
+            visit_type(node, scope)
         elif node.type == "identifier":
             visit_identifier(node, scope)
         else:
+            visit_class_or_function_bodies = []
             for child in node.children:
-                self._visit(
-                    child,
-                    scope,
-                    visit_identifier=visit_identifier,
-                    visit_function_definition=visit_function_definition,
-                    visit_keyword_argument=visit_keyword_argument,
+                visit_class_or_function_bodies.append(
+                    self._visit(
+                        child,
+                        scope,
+                        visit_identifier=visit_identifier,
+                        visit_function_definition=visit_function_definition,
+                        visit_keyword_argument=visit_keyword_argument,
+                        visit_type=visit_type,
+                        visit_assignment=visit_assignment,
+                    )
                 )
+            for visit_class_or_function_body in visit_class_or_function_bodies:
+                if visit_class_or_function_body:
+                    visit_class_or_function_body()
+        return None
 
-    def _visit_function_definition(self, node: Node, scope: Scope):
+    def _visit_function_definition(
+        self, node: Node, scope: Scope
+    ) -> Callable[[], None]:
         name = node.child_by_field_name("name")
         self._define_and_rename_identifier(name, scope)
-        parameters_scope = Scope(scope)
-        inside_scope = Scope(parameters_scope)
+        function_namespace = Scope(None)
+        function_scope = Scope(scope)
+
+        def visit_type(node: Node, ignored_scope: Scope):
+            self._visit_type(node, scope, visit_type=visit_type)
+
         parameters = node.child_by_field_name("parameters")
-        self._visit(parameters, parameters_scope,
-                    self._define_and_rename_identifier)
-        scope.insert_namespace(str(name.text), parameters_scope)
+        self._visit(
+            parameters,
+            function_namespace,
+            visit_identifier=self._define_and_rename_identifier,
+            visit_type=visit_type
+        )
+        function_scope.names.update(function_namespace.names)
+        scope.insert_namespace(str(name.text), function_namespace)
         self._visit(node.child_by_field_name("return_type"), scope)
-        self._visit(node.child_by_field_name("body"), inside_scope)
-
-    def _visit_typed_parameter(
-        self,
-        node: Node,
-        scope: Scope,
-        visit_identifier: Callable[[Node, Scope], None] = None,
-    ):
-        type_node = node.child_by_field_name("type")
-        if type_node.type == "identifier":
-            class_namespace = scope.get_namespace(str(type_node.text))
-            scope.insert_namespace(str(node.child(0).text), class_namespace)
-
-        for child in node.children:
-            self._visit(child, scope, visit_identifier=visit_identifier)
+        return lambda: (self._visit(node.child_by_field_name("body"), function_scope))
 
     def _visit_call(self, node: Node, scope: Scope):
         function = node.child_by_field_name("function")
@@ -289,19 +309,21 @@ class NamesReplacer:
         self._visit(arguments, scope,
                     visit_keyword_argument=visit_keyword_argument)
 
-    def _visit_class_definition(self, node: Node, scope: Scope):
-        print(node.child_by_field_name("name").text, node.sexp())
+    def _visit_class_definition(self, node: Node, scope: Scope) -> Callable[[], None]:
         name = node.child_by_field_name("name")
         self._define_and_rename_identifier(name, scope)
 
         self._visit(node.child_by_field_name("superclasses"), scope)
 
         class_scope = Scope(scope)
-        scope.insert_namespace(str(name.text), class_scope)
+        class_namespace = Scope(None)
+        scope.insert_namespace(str(name.text), class_namespace)
 
-        methods = node.child_by_field_name("body").children_by_field_name(
-            "function_definition"
-        )
+        methods = [
+            method
+            for method in node.child_by_field_name("body").children
+            if method.type == "function_definition"
+        ]
         method_scopes = []
         for method in methods:
             if method.type != "function_definition":
@@ -313,38 +335,55 @@ class NamesReplacer:
                 return str(node.text)
 
             name = method.child_by_field_name("name")
-            parameters_scope = Scope(scope)
-            method_scope = Scope(parameters_scope)
+            method_namespace = Scope(None)
+            method_scope = Scope(class_scope)
             method_scopes.append(method_scope)
 
             parameters = method.child_by_field_name("parameters")
             first_param = get_first_param(parameters.child(1))
-            scope.insert_namespace(first_param, class_scope)
+            scope.insert_namespace(first_param, class_namespace)
+
+            def visit_type(node: Node, ignored_scope: scope):
+                self._visit_type(node, class_scope, visit_type=visit_type)
 
             self._visit(
-                parameters, parameters_scope, self._define_and_rename_identifier
+                parameters,
+                method_namespace,
+                visit_identifier=self._define_and_rename_identifier,
+                visit_type=visit_type,
             )
-            scope.insert_namespace(str(name.text), parameters_scope)
+            method_scope.names.update(method_namespace.names)
+            scope.insert_namespace(str(name.text), method_namespace)
             self._visit(method.child_by_field_name("return_type"), scope)
 
-        for method, method_scope in zip(methods, method_scopes):
-            self._visit(method.child_by_field_name("body"), method_scope)
+        def visit_assignment(node: Node, scope: Scope):
+            left = node.child_by_field_name("left")
+            if left.type != "identifier" and left.type != "pattern_list":
+                self._visit_assignment(node, scope)
+                return
+            self._visit(
+                node.child_by_field_name("left"),
+                scope,
+                visit_identifier=ignore,
+            )
+            self._visit(node.child_by_field_name("type"), scope)
+            self._visit(node.child_by_field_name("right"), scope)
 
-        def ignore(*args, **kwargs):
-            return
+        def visit_body():
+            self._visit(
+                node.child_by_field_name("body"),
+                class_scope,
+                visit_function_definition=ignore,
+                visit_assignment=visit_assignment,
+            )
+            for method, method_scope in zip(methods, method_scopes):
+                self._visit(method.child_by_field_name("body"), method_scope)
 
-        self._visit(
-            node.child_by_field_name("body"),
-            class_scope,
-            visit_function_definition=ignore,
-        )
+        return visit_body
 
     def _visit_assignment(self, node: Node, scope: Scope):
-        self._visit(
-            node.child_by_field_name("left"),
-            scope,
-            visit_identifier=self._define_and_rename_identifier,
-        )
+        self._visit(node.child_by_field_name("left"),
+                    scope, visit_identifier=self._define_and_rename_identifier)
         self._visit(node.child_by_field_name("type"), scope)
         self._visit(node.child_by_field_name("right"), scope)
 
@@ -367,7 +406,7 @@ class NamesReplacer:
             )
             if namespace:
                 attribute = node.child_by_field_name("attribute")
-                visit_identifier(attribute, namespace)
+                self._rename_identifier(attribute, namespace)
                 return scope.get_namespace(str(attribute.text))
         else:
             self._visit(node, scope)
@@ -382,6 +421,20 @@ class NamesReplacer:
         self._visit(node.child_by_field_name("right"), scope)
         inside_scope = Scope(scope)
         self._visit(node.child_by_field_name("body"), inside_scope)
+
+    def _visit_named_expression(self, node: Node, scope: Scope):
+        self._visit(
+            node.child(0),
+            scope,
+            visit_identifier=self._define_and_rename_identifier,
+        )
+        self._visit(node.child_by_field_name("value"), scope)
+
+    def _visit_type(
+        self, node: Node, scope: Scope, visit_type: Callable[[Node, Scope], None] = None
+    ):
+        for child in node.children:
+            self._visit(child, scope, visit_type=visit_type)
 
     def _rename_identifier(self, node: Node, scope: Scope):
         if new_name := scope.get(node.text):
