@@ -146,9 +146,9 @@ class Tokenizer:
             merge_with_cache(chunks, pair_from_train, symbol)
         return list(chain.from_iterable(chunks))
 
-    def decode(self, ids: list[int], colorize: bool = False) -> str:
+    def decode(self, ids: list[int], colorize: bool = False, sep: str = "") -> str:
         if not colorize:
-            return "".join(self.vocab[id].decode("utf-8") for id in ids)
+            return sep.join(self.vocab[id].decode("utf-8") for id in ids)
         else:
             colorama.init(autoreset=True)
             decoded = []
@@ -156,7 +156,7 @@ class Tokenizer:
                 color = colors[index % len(colors)]
                 token = self.vocab[id].decode("utf-8")
                 decoded.append(color + token)
-            return "".join(decoded)
+            return sep.join(decoded)
 
 
 colors = [
