@@ -78,6 +78,28 @@ class EncoderBlock(nn.Module):
         return feedforward_res
 
 
+class PositionEncoding(nn.Module):
+    def __init__(self, embed_size: int):
+        self.embed_size = embed_size
+
+    def forward(self, sequence: torch.tensor) -> torch.tensor:
+        indices = torch.arange(0, self.embed_size, dtype=torch.float)
+        indices[1::2] -= 1
+        positions = torch.arange(0, len(sequence), dtype=torch.float)
+
+        indices.div_(self.embed_size)
+        indices = torch.pow(10000, indices)
+
+        indices.unsqueeze_(0)
+        positions.unsqueeze_(1)
+
+        pe = positions / indices
+        pe[:, ::2] = torch.sin(pe[:, ::2])
+        pe[:, 1::2] = torch.cos(pe[:, 1::2])
+
+        return pe
+
+
 class Encoder(nn.Module):
     def __init__(
         self,
@@ -100,9 +122,10 @@ class Encoder(nn.Module):
             ]
         )
         self.embedding = nn.Embedding(vocab_size, embed_size)
+        self.positional = PositionEncoding(embed_size)
 
     def forward(self, x):
-        return self.blocks(self.embedding(x))
+        return self.blocks(self.embedding(x) + self.positional(x))
 
 
 if __name__ == "__main__":
