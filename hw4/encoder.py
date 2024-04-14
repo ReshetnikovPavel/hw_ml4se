@@ -19,7 +19,8 @@ class ScaledDotProductAttention(nn.Module):
         k = self.key(x)
         v = self.value(x)
 
-        return F.softmax((q @ k.T) // math.sqrt(self.head_size)) @ v
+        res = (q @ k.transpose(-2, -1)) // math.sqrt(self.head_size)
+        return F.softmax(res, dim=-1) @ v
 
 
 class MultiHeadAttention(nn.Module):
@@ -40,8 +41,7 @@ class MultiHeadAttention(nn.Module):
 
     def forward(self, x: torch.tensor) -> torch.tensor:
         concatenated = torch.cat([head(x) for head in self.heads], dim=-1)
-        flattened = concatenated.view(x.size(0), -1)
-        res = self.projection(flattened)
+        res = self.projection(concatenated)
         return self.dropout(res)
 
 
@@ -80,9 +80,11 @@ class EncoderBlock(nn.Module):
 
 class PositionEncoding(nn.Module):
     def __init__(self, embed_size: int):
+        super().__init__()
         self.embed_size = embed_size
 
-    def forward(self, sequence: torch.tensor) -> torch.tensor:
+    def forward(self, x: torch.tensor) -> torch.tensor:
+        sequence = x[-1]
         indices = torch.arange(0, self.embed_size, dtype=torch.float)
         indices[1::2] -= 1
         positions = torch.arange(0, len(sequence), dtype=torch.float)
@@ -97,7 +99,7 @@ class PositionEncoding(nn.Module):
         pe[:, ::2] = torch.sin(pe[:, ::2])
         pe[:, 1::2] = torch.cos(pe[:, 1::2])
 
-        return pe
+        return torch.stack([pe for _ in range(x.size(0))])
 
 
 class Encoder(nn.Module):
@@ -130,13 +132,18 @@ class Encoder(nn.Module):
 
 if __name__ == "__main__":
     text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-
     seq = text.split()
     words = set(seq)
     vocab = dict()
     for i, word in enumerate(words):
         vocab[word] = i
-    tokens = [vocab[t] for t in words]
+    tokens = [vocab[t] for t in seq]
+    batch_len = len(tokens) // 3
+    batches = [
+        tokens[: batch_len],
+        tokens[batch_len : 2 * batch_len],
+        tokens[2 * batch_len : 3 * batch_len],
+    ]
 
-    encoder = Encoder(len(vocab), len(tokens))
-    print(encoder.forward(torch.tensor(tokens)))
+    encoder = Encoder(len(vocab), len(batches[0]))
+    print(encoder.forward(torch.tensor(batches)))
