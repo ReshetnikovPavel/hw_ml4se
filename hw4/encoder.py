@@ -19,7 +19,7 @@ class ScaledDotProductAttention(nn.Module):
         k = self.key(x)
         v = self.value(x)
 
-        res = (q @ k.transpose(-2, -1)) // math.sqrt(self.head_size)
+        res = (q @ k.transpose(-2, -1)) / math.sqrt(self.head_size)
         return F.softmax(res, dim=-1) @ v
 
 
