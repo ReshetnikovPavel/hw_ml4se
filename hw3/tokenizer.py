@@ -269,7 +269,7 @@ python_operations = [
     "~",
     "<<",
     ">>",
-    "=",
+    "==",
     "+=",
     "-=",
     "*=",
@@ -301,7 +301,7 @@ if __name__ == "__main__":
     dataset = load_dataset("iamtarun/python_code_instructions_18k_alpaca")["train"]
     text = EOF.join(example["output"] for example in dataset)
     tokenizer = Tokenizer(build_special_symbols())
-    tokenizer.train(text, 10000)
+    tokenizer.train(text, 20000, progress=True)
 
     with open("data.pkl", "wb") as file:
         pickle.dump(tokenizer, file)
@@ -320,7 +320,7 @@ if __name__ == "__main__":
     print(encoded)
     print()
 
-    decoded = tokenizer.decode(encoded)
+    decoded = tokenizer.decode(encoded, colorize=True)
     print("DECODED:::")
     print(decoded)
     print()
