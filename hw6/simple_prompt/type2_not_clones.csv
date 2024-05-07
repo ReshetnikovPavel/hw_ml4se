@@ -1,0 +1,37 @@
+content,is_clone
+False,"**No.**
+
+The two code snippets are not clones. They have different return types and perform completely opposite tasks in terms of their functionality: the first snippet calculates area while second finds maximum value between numbers"
+False,"**No, the code snippets are not clones.**
+
+Snippet  1 is a method that calculates area of rectangle. It takes two double parameters and returns their product as result while snippet 2 checks if given number in integer parameter `num`, prime or non-prime by iterating from i = [0 to num] checking for any divisor except itself (i > self)
+
+These snippets have different functionalities, purpose & logic"
+False,"**No, the code snippets are not clones.**
+
+Snippet  2 is a function that reverses an input string by iterating through each character in reverse order and appending it to another new String variable. Snippet 1 calculates area of rectangle based on width & height values passed as arguments using multiplication operator (*)."
+False,"**No, the code snippets are not clones.**
+
+Snippet1 calculates area of a rectangle by multiplying width and height. Snippet2 sums all elements in an integer array using for-each loop without any similarity to snippet 3 except both being public methods with single argument each but different functionalities"
+False,"**No, the code snippets are not clones.**
+
+Snippet  1 calculates area of a rectangle by multiplying width and height while snippet 2 finds average value in an array using loop iteration to calculate total then dividing it with length"
+False,"**No, the code snippets are not clones.**
+
+Snippet  2 is a function that checks if given string `word`, when reversed equals itself or in other words it's palindrome and returns boolean value accordingly (true for palindromes false otherwise). 
+
+
+While snippet one calculates area of rectangle by multiplying width with height."
+False,"**No, the code snippets are not clones.**
+
+Snippet  2 is a function that calculates and returns factorials of an integer. It uses loops to iterate from 1 up until n (inclusive) multiplying each number in turn with previous results stored within factorial variable which starts as initialized by default value i .e., `factorial =` **0**. Snippet One, on the other hand is a function that calculates and returns area for rectangle or square. It multiplies width & height to get total Area of shape"
+False,"**No.**
+
+Snippet1 and snippet are not code clones. They have different return types, parameters lists (width & height vs int), logic implementations for calculating area versus checking even numbers respectively"
+False,"**No, the code snippets are not clones.**
+
+While both of them involve defining a method that takes in parameters and returns double values as output. However:  - Snippet1 calculates area by multiplying width with height while snippet two converts celsius to fahrenheit using formula (celsius * 9/5) +32
+These differences make the code snippets unique even though they share some similarities"
+False,"**No, the code snippets are not clones.**
+
+Snippet  1 is a function that finds and returns maximum between two numbers. It uses conditional operator to compare both values in order of their magnitude then return greater value among them as result while snippet 2 checks if given number num prime or non-prime by iterating from i = [0,num) checking for any divisor except itself (1)."

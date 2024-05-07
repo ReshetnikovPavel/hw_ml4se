@@ -1,0 +1,136 @@
+content,is_clone
+True,"**Yes**, there are big chunks of code in these two snippets that implement the same thing.
+
+Both methods calculate area by multiplying width/length and height or breath, respectively: `width*height =  breadth x Length`. However snippet 2 includes additional validation to ensure both dimensions (Length & Breadths) must be positive numbers before calculating their product as per business logic of an application"
+True,"**Yes**, there are big chunks of code in these two snippets that implement the same thing.
+
+Both methods calculate area by multiplying width or height with a corresponding dimension (length and breath). The only difference is: 
+
+
+* Snippet **1:** Does not perform any validation on input dimensions, assuming they will always be positive numbers
+    - It directly calculates `width * length` without checking for invalid inputs.
+
+**Snippet  2**: Implements additional logic to validate the user's entered values before calculating area and throws an exception if either dimension is less than or equal zero: 
+
+
+```java   public double computeArea(double lenth, Double breadth) {
+    if (length <=0 || breath<= ) throw new IllegalArgumentException(""Dimensions must be positive"");
+
+}  `"
+True,"**Yes**, there are big chunks of code in these two snippets that implement the same thing, namely finding and returning maximum between `a`,  and   ```b`.
+
+* **Snippet 1:** This snippet defines a method called findMax with parameters (int) for both arguments. It uses an if-else statement to compare their values using ternary operator(?), which returns one of them based on the comparison result, in this case maximum between `a` and  and   ```b`.
+
+* **Snippet 2:** This snippet defines a method called getMax with parameters (int) for both arguments. It uses an if-else statement to compare their values using ternary operator(?), which returns one of them based on the comparison result, in this case maximum between `x` and  and   ```y`. Additionally it prints ""Max value is:"" alongwith max variable before returning its content as a return type for method.
+
+**Similarities:**
+* Both snippets use an if-else statement with ternary operator to find out which argument has the greater or equal values among two arguments passed in their respective methods (findmax and getMax). 
+
+
+ **Differences**:  The only difference between these code snippet is that Snippet2 prints ""Max valueis:"" alongwith max variable before returning its content as a return type for method."
+True,"**Yes, there are big chunks of code in both snippets that implement the same thing.**
+
+Both functions check if a given number is prime. They use loops to iterate from 2 up until some limit and test for divisibility by each iteration variable `i`. If any divisor other than itself (1) or one less then it self(itself), they return false, indicating non-primality of the inputted integer in both snippets
+
+**Similarities:**
+* Both functions start with checking if number is smaller equal to 2. In case this condition satisfies function returns `false` as all prime numbers are greater than two and thus not divisible by themselves or one less then itself(itself).
+
+
+```java  public boolean checkPrime (int num) {    if   num <=1{      return false;     }
+for i in range 2 to sqrt of number:        If the remainder when dividing a given integer with each iteration variable is zero, it means that this function has found another divisor for our inputted value and thus we return `false`.  ```
+
+* Both functions use loops. In snippet one they iterate from two up until num-1 (exclusive), checking if number can be divided by any of these numbers without leaving a remainder(divisible).
+In the second case, it iterates only till square root od inputted integer as all divisors greater than its squre are mirrored in smaller ones.
+
+**Differences:** 
+
+
+* In snippet one they iterate until num-1 (exclusive), whereas  snippet two stops at sqrt of number to optimize performance and avoid unnecessary iterations for large numbers where most factors would be less or equal square root od inputted integer"
+True,"**Yes, there are big chunks of code in both snippets that implement the same thing.**
+
+Both `reverseString()` and  flipStrin() methods have similar functionalities: they reverse a given string. The core logic is identical across these two functions which includes iterating through each character from end to start using nested loops with reversed indices, appending them into new strings called ""reversed"" or result"", respectively in the case of snippet 1 and  snippet2 .
+
+**Here are some similarities between both snippets:**
+- Both methods take a string as input.
+
+
+```java    public String reverseString(...){ ... }   // Snippet One     -- Reverse Function        ---      Reverse function with similar logic to flipStrin() method in snippet 1 and  snippet2 .
+
+ public void main(... ) {                 ---- Main Method ----
+       System out println(""Original string: "" + str); // Print original String.
+
+
+    String reversed = reverse(str) ;           // Reverse the input using function from Snippet One or flipStrin() method in snippet 1 and  snippet2 .
+
+     }                                         --- End of Main Method ---
+```"
+True,"**Yes, there is a significant chunk of code in both snippets that implements the same thing.**
+
+Both `sumArray()` and  ```java public int sum(int[] arr) { ... } ``` methods use: 
+
+
+- A loop to iterate over each element (`i`) within an array.   `arr`.
+    * The variable i is used as a counter or index in both snippets, allowing the iteration through elements of `array`, and it's incremented with every step until all items are processed
+
+ - An accumulator (sum) initialized outside  the loop to store running total 
+
+
+- A simple addition operation (`+=`) within each element. This adds current value at i position into sum variable in both snippets, effectively accumulating the values of array elements during iteration
+
+
+
+**The difference between these two methods is:**
+    * The first method doesn't check for negative numbers and throws an exception if encountered while `totalArray()` does so by throwing a custom IllegalArgumentException."
+True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
+
+Both methods: 1). Calculate sum by iterating over an array and adding each element to a running `total`.  2) Divide total value with length. Both use similar logic for calculating average but differ slightly as snippet-two checks if input is empty before proceeding further, whereas first one doesn't handle this scenario explicitly
+
+**Here are the overlapping code chunks:**
+    ```java 	   int sum =0;		     total +=value ;  			return (double)sum / numbers.length;)      				 return( double ) total/ data . length;}`"
+True,"**Yes, there are big chunks of code in both snippets that implement the same thing.**
+
+Both `isPalindrome()` and  checkPalindrom() methods: 
+
+
+1) **Reverse a string:** They use loops to iterate through each character from end-to start. In reverse order they append characters into new reversed strings called 'reversed' or ""flipped"".
+2).**Compare original with the palindrome version.** The method compares both words and returns true if these are equal, indicating that it is indeed  palindrome/checkPalindrome .
+
+The only difference between them: 
+
+
+* **Case sensitivity:** `isPalindrom()` uses `.equals()`, which considers case. In contrast , check Palindrome` ignores the capitalization using`.equalsIgnoreCase()."
+True,"**Yes, there are significant chunks of code in both snippets that implement the same thing.**
+
+Both methods calculate factorials for a given integer `n`. They use loops to iterate from 1 up through n and multiply each number by an accumulator variable. The difference lies mainly:
+
+
+* **Validation:** Snippet2 includes validation logic, throwing exceptions when passed negative numbers as input (Factorial is not defined in these cases).
+    - In contrast snippet one doesn't have any such checks or validations for the inputs it receives and simply calculates factorial without checking if number entered by user was valid.
+
+
+* **Exception Handling:** Snippet2 includes exception handling using `IllegalArgumentExceptions` to handle invalid input, whereas  snippet1 does not include this feature in its code structure
+
+**Overall Code Similarity**:
+- Both methods use a loop with the same logic for calculating factorials: iterating from 0 up through n and multiplying each number by an accumulator variable.
+
+
+* The difference lies mainly within validation checks (handling negative numbers)"
+True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
+
+Both `isEven()` and  checkEvent() methods use modulo operator (`%`) to check if a number is even. The only difference between them lies within their conditional logic: 
+
+
+- **Snippet1:** Returns true directly when num %2 ==0, without any additional checks or code blocks
+```java    public boolean   isEven(int  num) {      return     true; } ```
+
+ -** Snippet3.** Uses an if else block to check the condition and returns accordingly. 
+
+
+`if (number%4==1){ return true;}else{Return false}`"
+True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
+
+Both functions convert Celsius temperature to Fahrenheit. They both:  - Multiply `celsius`, or more accurately here - tempCelsius by (9/5) 
+
+
+```java   (tempCelcius *     *    
+          -----      ---        -- ) +32;`"

@@ -1,0 +1,110 @@
+content,is_clone
+True,"**Yes**, there are big chunks of code in these two snippets that implement the same thing.
+
+Both methods have a similar structure and perform exactly what is described by their method names: calculating area based on width/height orlength /breadth respectively, then multiplying them together using `*` operator to return an double value representing calculated Area ."
+True,"**Yes**, there are big chunks of code in both snippets that implement the same thing.
+
+Both functions take two integers as input and return an integer representing their maximum value: 
+
+
+```java  public int findMax(int a, ... ) { }   and public getMax(... , y) {} ```"
+True,"**Yes, there are big chunks of code in both snippets that implement the same thing.**
+
+Both `isPrime()` and  checkPrime() methods use a similar approach to determine if an integer is prime: they iterate from 2 up until one less than num/j (where j = i or number) checking for any divisors. If no divisor greater then two was found, both functions return true indicating that the inputted value might be considered as Prime Number
+
+**Here's a breakdown of similarities:**
+- Both methods use `for` loops to iterate through numbers from 2 up until one less than num/j (where j = i or number).
+
+
+```java  public boolean isPrime(int n) {    // Snippet1   } public void checkprime() {} //Snippet3 } ```
+
+**Differences:**
+- The method names are different: `isPrime()` and`check Prime`. 
+
+
+
+The code in both snippets performs the same task of checking if a number satisfies all conditions to be considered as prime."
+True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
+
+Both `reverseString()` and  flipStrin() methods have similar functionality: they reverse a given string. They both use loops to iterate through each character from last index till first one (inclusive) using decrementing loop counter variable (`i` or j). Inside this iteration, characters are appended in reversed order into new strings called `reversed`, then returned as the result of these methods
+
+**Here is an overlap between two snippets:**
+    - Both use a for loops to iterate through each character from last index till first one. 
+
+
+Both code samples achieve similar results by iterating over string's characters and appending them in reverse order into new strings, which are then returned as the result of these methods"
+True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
+
+Both Snippet1 and snippet 2 use a `for-each loop`, iterate through an array called ""arr"" or  “array”, respectively. Inside each iteration:
+
+
+* They initialize variable sum to zero (snippet one)
+    or total(Snippet Two).
+
+
+
+**The code for summing the elements of both arrays is identical.**
+
+```java 	int i : arr {		sum +=i; } ``` and   ` int j  array{total+=j;}`."
+True,"**Yes, there are big chunks of code in both snippets that implement the same thing.**
+
+Both functions have similar functionality: they calculate and return an average based on a given array `numbers`. The steps involved include iterating through each element using for-each loop to sum their values. Finally dividing by length is done before returning as double value type with casting if necessary in Java syntax convention of code snippet 1 &2 respectively
+
+**Code Similarity:**
+```java  // Snippet commonality highlighted below:   */
+
+
+public class AverageCalculator {    /* */ public static void main(String[] args) {}     }      * /        int sum = /*; */;       for ( int num : numbers )         {             sum +=num ;          };           return((double)(total)/data.length);  
+```"
+True,"**Yes, there are big chunks of code in both snippets that implement the same thing.**
+
+Both `isPalindrome()` and  checkPalindrom() methods have similar functionalities: 
+
+
+- They take a string as input parameter (word or text).
+
+
+
+ - Iterate through each character from end to beginning using reverse for loop.
+    ```java   for(int i = word/text .length()-1;i>=0 ;--j) { }  `
+
+     Reverse the characters in new String called reversed and flipped respectively
+
+
+- Compare original string with its mirrored version (reversed or fliped). If they are equal, return true. Otherwise false
+
+
+
+**Code Similarity:**
+```java   for(int i = word/text .length()-1;i>=0 ;--j) { }  `
+
+ `return text /word == flipped`."
+True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
+
+Both `findFactorial()` and  calculate Factorials() methods have similar functionalities: 
+
+
+- Both use a loop to iterate from **1 up through n**. (j <= number) is equivalent i<=n.
+ - In each iteration, they multiply an accumulator variable by j or factorial with the current value of 'i'.
+
+**The only difference between these two snippets:**  is that Snippet 2 uses different variables for its loop counter and result than snippet one does in their respective loops:
+
+
+- **Snippet1**: i is used as a factor, while `factorial` stores intermediate results.
+ - In contrast to this ,snippet Two utilizes j instead of factorial .
+
+**Conclusion:**  Both snippets are functionally equivalent but differ slightly due the different variables they use for loop counter and result accumulation"
+True,"**Yes, there are big chunks of code in both snippets that implement the same thing.**
+
+Both functions have a similar structure and perform exactly identical operations: they take an integer as input (`num`), calculate its modulo with `%`, check if it is divisible by 2 (i.e., equal to zero), then return either true or false based on whether this condition holds True/False respectively for even numbers only in both cases of the code snippets provided above.**
+
+**Therefore, there's no need  to have two different functions with similar implementations when they can be combined into one function as seen below:**
+```java 
+
+
+public boolean isEven(int num) {    // Combine these methods to avoid redundancy.   return checkeven (num); } public static int evenChecker = number %2 ==0; return  checkEvent;}
+
+            `"
+True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
+
+Both methods have a similar structure: they take one argument (`celsius`), perform an operation to convert it from Celsius degrees into Fahrenheit degree and return this value. The only difference between them is their method name `convertCelsiusToFahrenheit` vs  `/tempCelcius`."

@@ -1,0 +1,31 @@
+content,is_clone
+False,"**No.**
+
+The two code snippets are not clones. They have different method names (`calculatearea()` and  compute area`), parameters (width/height vs Length / Breadth), return types(double)."
+True,"**Yes.**
+
+Both code snippets are clones of each other. They both implement the same functionality to find and return maximum between two integers using a ternary operator `?`. The only difference is in variable names (`a`,  and   x`) used as input parameters, but this does not affect their logic or output"
+True,"**Yes, the code snippets are clones.**
+
+Both functions have identical logic and functionality. They both implement a primality test algorithm that iterates from `2' to one less than 'num'` or  one lesssthan number in snippet 1 & checkPrime function respectively checking if any of these numbers divides evenly into num/number without leaving the remainder zero, indicating it is not prime (false). If no divisor found then return true."
+True,"**Yes, the code snippets are clones.**
+
+Both functions have identical functionality: they take a string as an argument and return its reversed version by iterating through each character in reverse order using `for-loop`. The only difference between them is their function names (`reverseString()` vs.  `flipstring()`) which can be considered stylistic variations for the same purpose of reversing strings"
+True,"**Yes, the code snippets are clones.**
+
+Both of them have:  - A public method with a signature that accepts an integer `array`. - An initialization variable named sum or in this case 'total' to store intermediate results.   They both use for each loop iterating over elements and adding their values into total/sum respectively, followed by returning the result as either ""Sum""or  inthiscase,""Total""."
+True,"**Yes, the code snippets are clones.**
+
+Both functions have identical functionality: they take an array of integers as input and return their average using a `for-each loop`. The only difference between them is in variable names (sum vs total) used to accumulate partial sums."
+True,"**Yes, the code snippets are clones.**
+
+Both of these functions have identical logic for reversing a string: they iterate through each character in reverse order and append it to another new reversed String variable until all characters from original word/text is added. Then both check if this newly created palindrome-reversed version matches with its corresponding input text or not by using the `equals()` method, returning true only when these two strings are equal (palindrome)."
+True,"**Yes, the code snippets are clones.**
+
+Both functions have identical logic: they calculate and return factorial of a given integer. They use `for loops`, multiply variables by each number in range from 1 to n/number respectively (inclusive),  and finally returns calculated result with appropriate variable names (`factorial` vs 'result')."
+True,"**Yes, the code snippets are clones.**
+
+Both of them have identical functionality. They both take an integer as input and return a Boolean value indicating whether it is even or not based on modulo operation with `%`."
+True,"**Yes, the code snippets are clones.**
+
+Both functions have identical functionality and structure. They both convert Celsius temperature to Fahrenheit by multiplying it with `(double)(8 / double)/4`, adding a constant of  'int', then returning this value as their result in degrees fahrenheit"

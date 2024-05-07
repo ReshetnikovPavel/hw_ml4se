@@ -1,0 +1,56 @@
+content,is_clone
+False,"**No.**
+
+The two code snippets are not clones. They have different method names, input parameters (width and height vs Length & Breadth), exception handling for invalid dimensions in the second snippet but do perform similar calculations to calculate area based on their respective inputs: width*height or length * breadth"
+False,"**No.**
+
+The two code snippets are not clones. They have different method names, parameters (width and height vs Length & Breadth), exception handling for invalid dimensions in the second snippet but no such validation is present  in Snippet 1 ."
+False,"**No.**
+
+The two code snippets are not clones because they have different purposes and functionalities despite having similar logic for finding the maximum of a pair integers (a, b) in Snippet 1. In contrast to snippet one which only returns an integer value representing max without any additional output or processing steps on it , snipppet Two also prints out ""Max Value is :"" along with its result using System .out statement before returning that same Integer as the function's return type"
+True,"**Yes, the code snippets are clones.**
+
+Both functions have a similar structure and logic for checking if an integer is prime. They both:  - Iterate from 2 to `num`. - Check each number in this range using modulo operator (`%`). If any of these numbers divides evenly into num (i % n ==0), then the function returns false, indicating that it's not a Prime Number; otherwise return true for being prime.
+
+The only difference between them is:  - Snippet 1 iterates from `2` to `<num>`.
+    While snippet two uses an optimized version of this loop by checking up until square root(number) instead, as any factor greater than the sqrt would have a corresponding smaller one already checked in previous iterations."
+True,"**Yes, the code snippets are clones.**
+
+Both of these methods reverse a given string by iterating through it in backward order and appending each character to an empty `reversedString`. The only difference between them is their method name (`reverse String`) vs.  (`flipstring`)."
+False,"**No, the code snippets provided in your question do **not appear to be clones**.
+
+While both use a `for-each loop`, have similar logic for iterating over an array and calculating its sum or totals. However: 
+
+
+* Snippet1 does not include any validation checks on input values (negative numbers), unlike snippet2 which throws exceptions when encountering negative inputs using the IllegalArgumentException class in Java
+    
+
+Therefore, they differ slightly due to their additional functionality of handling invalid data by throwing an exception"
+False,"**No, the code snippets are not clones.**
+
+While both methods calculate an average of a set numbers in Java using loops and iteration over arrays elements to sum their values: 
+
+
+- Snippet1 focuses on calculating averages for any integer array without checking if it's empty. It throws no exceptions when encountering such cases but rather calculates the wrong result (NaN).
+ -Snippet2 includes additional validation by throwing an `IllegalArgumentException` in case of attempting average calculation with a zero length input, ensuring proper handling and preventing incorrect results or errors during runtime"
+True,"**Yes, the code snippets are clones.**
+
+Both functions reverse a given string by iterating through it in backward order and appending each character to another new reversed String variable using `+=`. They then compare this newly created palindrome with original word/text. If they're equal (ignoring case), both return true indicating that input is indeed the same when read backwards, otherwise false"
+False,"**No, the code snippets are not clones.**
+
+While both functions calculate factorials of a given integer `n`, they have some differences: 
+
+
+- **Name:** Snippet1 is named ""findFactorial"", while snippet2 has an additional name called 'calculate factorial'. This difference in naming makes them distinct.
+ -**Error Handling**: The second code includes error handling for negative numbers, which the first one does not include and throws a runtime exception instead when encountering such inputs"
+False,"**No, the code snippets are not clones.**
+
+While both methods achieve checking if a given number is even or odd by using modulo operation and returning boolean values (true for Even & False otherwise), they differ in their approach: 
+
+
+- Snippet1 uses an anonymous return statement within its method. This makes it more concise but less readable compared to snippet2's conditional block with explicit true/false returns
+
+**Therefore, the code snippets are not clones.**"
+False,"**No, the code snippets are different.**
+
+Snippet  two includes additional validation and exception handling. It checks if `celsiusToFahrenheit()` is called with a temperature below absolute zero (-460°F), which would be impossible in reality due to limitations of physical systems (absolute 1st law). If such an argument occurs, the method throws IllegalArgumentException indicating that it's not possible and provides additional context."

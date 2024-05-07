@@ -1,0 +1,110 @@
+content,is_clone
+False,"**No, the code snippets are not clones.**
+
+While both functions calculate factorials of a number iteratively and recursively respectively. They have different implementations:
+
+
+- **Snippet  iterative:** It uses an iterative approach with `for loop`. 
+
+
+
+```java public int factorialIteractive(int n) { ... } ```
+    |--- iteration starts from i =1 till it reaches or exceeds the value of 'n' |
+
+   -- result is initialized to be equal one. --
+
+
+- **Snippet recursive:** It uses a recursion approach with `if else` condition and calls itself recursively until base case reached 
+
+
+
+```java public int factorialRecursive(int n) { ... } ```
+    |--- if the value of 'n' equals zero then return result as  1 --- |
+
+   -- otherwise, calculate current number by multiplying it to previous factorials --"
+False,"**No, the code snippets are not clones.** 
+
+
+While both methods achieve finding maximum value in an integer Array they differ significantly:
+
+- **Snippet1:** This snippet iterates through each element of array and updates `max`, keeping track on largest encountered. It uses a loop for iteration with O(n) time complexity where n is the size pf arrray
+ -** Snippet2 :  This method utilizes Java's Stream API, which provides an efficient way to find maximum value in Array without explicit looping.** 
+
+It converts array into stream and then applies `max()` function. This approach has a constant O(1) time complexity as it uses internal algorithms of the java streams library"
+False,"**No, the code snippets are not clones.**
+
+Snippet1 implements a two pointer approach to check if given string palindrome or non-palindrome using iterative method whereas snippet2 uses built in function of Java `StringBuilder`."
+False,"**No, the code snippets are not clones.** They have different functionalities and approaches to calculate a summation of an integer Array: 
+
+
+- **Snippet1:** This snippet iterates through each element in ` array`, adds it up using  a for loop. It uses iterative approach with explicit iteration over elements within range defined by length or size property
+
+ -** Snippet2 :`
+import java . util ; Arrays; public int sumArrayStream(int[]array) { returnArraysstream ( Array).sum(); } 
+
+
+This snippet utilizes Java's Stream API to calculate the summation of an integer array. It uses a stream-based approach where it converts each element in `arrays`, sums them up using  `Sum()` method, and returns that sum as result"
+True,"**Yes, the code snippets are clones.**
+
+Both methods achieve reversing a string by iterating through its characters in reversed order and appending them to another variable. The first snippet uses an iterative approach with loops while  the second one utilizes StringBuilder's reverse() method for efficient reversal using Java objects"
+False,"**No.** The code snippets are not clones of each other because they use different approaches to determine if a number is prime:
+
+- **Snippet1:** Uses an iterative approach with nested loops. It iterates from `2*i <= num`, checking for divisors up until the square root (optimization). If any divisor divides evenly, it returns false; otherwise true after iteration completes without finding factors beyond sqrt(num)
+    
+
+
+ -** Snippet 3: **Uses a stream-based approach with IntStream. It generates an integer range from `2` to  the squre of the number and checks if there is any divisor in that interval using noneMatch(). If no divisors are found, it returns true; otherwise false"
+True,"**Yes, the code snippets are clones.** They both implement a method to calculate and return an average of elements in integer arrays using different approaches:
+
+- **Snippet 1:** Uses iteration with `for each loop`, calculates sum by iterating through array values. Then divides it into length for averaging without external libraries or streams
+    ```java  public double findAverageIterative(int[]array){ ... } ```
+
+
+ -** Snippet2 : uses Java Stream API.** It converts the integer arrays to stream, applies average method and returns an optional value using `orElse`. If no result is available it sets default 0.
+
+   ` java import Arrays; public class AverageStream {  public double findAverage(int[] array) {...} }
+    ```"
+True,"**Yes**, the code snippets are clones of each other in terms that they both implement a method to check if an integer is present within another given array using iteration and comparison logic, but with different approaches.
+
+- Snippet 1 uses traditional for loop iterating through elements checking equality against `value`.
+
+
+```java
+public boolean containsValueIterative(int[] arrray , int value) {  // method signature same as snippet2    for (Integer i : array){   if((i == Integer )==true{ return true; }     }return false;}
+
+            ` 
+
+
+
+- Snippet two uses Java Stream API's `anyMatch()` to check if any element in the given integer Array is equal  to a specific value.
+
+
+```java
+import java .util.*;    public boolean containsValueStream(int[] array, int Value) { return Arrays   stream (array).Anymatch((i -> i == Integer)); }
+
+            `"
+False,"**No.**
+
+The two code snippets are not clones of each other because they implement different sorting algorithms and use entirely distinct approaches to sort an integer arrays:
+
+
+- **Snippet1:** Implements the bubble Sort algorithm using nested loops for comparison between adjacent elements. It swaps them if needed, resulting in a sorted array within O(n^2) time complexity
+
+ -** Snippet 3.** Uses Java Streams API with `Arrays` and Comparator classes to sort an integer arrays efficiently without modifying original data structure by creating new copy of the same size as input but filled up using natural ordering."
+True,"**Yes, the code snippets are clones.** They both achieve similar functionality of converting a given `list`, containing strings to uppercase using different approaches:
+
+- **Snippet 1:** Uses an iterative approach with loops and collections for conversion in two steps (converting each string individually then adding it).
+
+
+```java  List<String> upperCaseIterative( List < String > list ) {
+    // ... code from snippet one here... } ```
+
+
+
+ -** Snippet2 : **Uses a stream-based functional approach with `map` and collectors for conversion in single step.
+
+   Code is similar to the iterative version but uses streams, which are more concise  and efficient way of achieving same result
+
+
+```java List<String> upperCaseStream(List < String > list) {
+    // ... code from snippet two here... } ```"

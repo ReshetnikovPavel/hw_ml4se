@@ -1,0 +1,2 @@
+    prompt = ("Please analyze the following two code snippets and determine if they are code clones. Respond with ‘yes’ if the code snippets are clones or ‘no’ if not." + 
+
