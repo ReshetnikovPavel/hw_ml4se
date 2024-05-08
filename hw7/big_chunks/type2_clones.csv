@@ -1,4 +1,4 @@
-content,is_clone
+is_clone,content
 True,"**Yes**, there are big chunks of code in these two snippets that implement the same thing.
 
 Both methods have a similar structure and perform exactly what is described by their method names: calculating area based on width/height orlength /breadth respectively, then multiplying them together using `*` operator to return an double value representing calculated Area ."

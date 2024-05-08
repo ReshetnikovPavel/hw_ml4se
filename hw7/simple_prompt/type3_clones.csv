@@ -1,4 +1,4 @@
-content,is_clone
+is_clone,content
 False,"**No.**
 
 The two code snippets are not clones. They have different method names, input parameters (width and height vs Length & Breadth), exception handling for invalid dimensions in the second snippet but do perform similar calculations to calculate area based on their respective inputs: width*height or length * breadth"

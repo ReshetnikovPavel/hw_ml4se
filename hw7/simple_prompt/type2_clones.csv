@@ -1,4 +1,4 @@
-content,is_clone
+is_clone,content
 False,"**No.**
 
 The two code snippets are not clones. They have different method names (`calculatearea()` and  compute area`), parameters (width/height vs Length / Breadth), return types(double)."

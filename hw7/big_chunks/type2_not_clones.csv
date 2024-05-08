@@ -1,4 +1,4 @@
-content,is_clone
+is_clone,content
 ,"**Snippet  1:**
 
 ```java public double calculateArea(...) {... return width * height;} ```

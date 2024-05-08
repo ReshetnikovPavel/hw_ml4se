@@ -1,4 +1,4 @@
-content,is_clone
+is_clone,content
 True,"**Yes, there are big chunks of code in these two snippets that implement the same thing.**
 
 Both `factorialIterative()` and  'factorial Recursive()'` functions calculate factorials. They both use a loop to iterate from 1 up through n (inclusive) multiplying each number along with an accumulator variable called 'result'. The result is then returned as output when all iterations are complete in the iterative version, or recursively calculated by calling itself until it reaches zero and returns one for base case scenario of recursion.

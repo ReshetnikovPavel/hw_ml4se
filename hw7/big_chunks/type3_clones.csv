@@ -1,4 +1,4 @@
-content,is_clone
+is_clone,content
 True,"**Yes**, there are big chunks of code in these two snippets that implement the same thing.
 
 Both methods calculate area by multiplying width/length and height or breath, respectively: `width*height =  breadth x Length`. However snippet 2 includes additional validation to ensure both dimensions (Length & Breadths) must be positive numbers before calculating their product as per business logic of an application"

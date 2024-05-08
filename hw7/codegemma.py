@@ -22,7 +22,7 @@ class GemmaTokenizerForLLamaCpp(BaseLlamaTokenizer):
         return self.tokenizer.decode(tokens).encode('utf-8')
 
 
-path = "/home/pavelresh/college/ml4se/hw_ml4se/hw6/codegemma-1.1-7b-it-Q4_K_M.gguf"
+path = "/home/pavelresh/college/ml4se/hw_ml4se/hw7/codegemma-1.1-7b-it-Q4_K_M.gguf"
 
 tokenizer = GemmaTokenizerForLLamaCpp()
 llm = Llama(model_path=path,

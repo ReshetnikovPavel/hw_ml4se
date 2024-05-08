@@ -1,4 +1,4 @@
-content,is_clone
+is_clone,content
 False,"**No, the code snippets are not clones.**
 
 While both use try-catch blocks to handle exceptions and close resources properly upon completion or error handling in finally block they have different functionalities: 
